@@ -27,15 +27,6 @@ function configure_studio() {
   fi
 }
 
-
-function configure_connect() {
-
-  if [ -n "$NUXEO_CONNECT_USERNAME" -a -n "$NUXEO_CONNECT_PASSWORD" -a -n "$NUXEO_STUDIO_PROJECT" ]; then  
-    echo "---> Configuring connect credentials"
-    /docker-entrypoint.sh nuxeoctl register $NUXEO_CONNECT_USERNAME $NUXEO_STUDIO_PROJECT dev openshift-dev $NUXEO_CONNECT_PASSWORD
-  fi
-}
-
 # Check if the server http port is up
 function ishttpup() {
   count=0

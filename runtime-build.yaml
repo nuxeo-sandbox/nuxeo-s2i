@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: image-build
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: nuxeo-sample:latest
+  source:
+    dockerfile: |-
+      FROM docker-nuxeo:latest
+      COPY build /build
+      RUN /build/install.sh
+    images:
+    - from: 
+        kind: ImageStreamTag
+        name: nuxeo-sample-builder:latest
+      paths: 
+      - sourcePath: /build
+        destinationDir: "."
+  strategy:
+    dockerStrategy:
+      from: 
+        kind: ImageStreamTag
+        name: docker-nuxeo:latest
+  triggers:
+  - imageChange: {}
+    type: ImageChange
