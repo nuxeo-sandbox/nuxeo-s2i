@@ -23,7 +23,7 @@ function configure_studio() {
       <password>$NUXEO_CONNECT_PASSWORD</password>\
     </server>"
     sed -i "s|<!-- ### configured studio credentials ### -->|$xml|" $HOME/.m2/settings.xml
-    sed -i "s|<connect.password>****</connect.password>|<connect.password>$NUXEO_CONNECT_PASSWORD</connect.password>|" $HOME/.m2/settings.xml
+    sed -i "s|<connect.password>\*\*\*\*</connect.password>|<connect.password>$NUXEO_CONNECT_PASSWORD</connect.password>|" $HOME/.m2/settings.xml
   fi
 }
 
