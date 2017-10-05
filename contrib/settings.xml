@@ -2,6 +2,15 @@
   <servers>
     <!-- ### configured studio credentials ### -->
   </servers>
+
+  <mirrors>
+   <!-- ### configured mirrors ### -->
+  </mirrors>
+
+  <proxies>
+   <!-- ### configured http proxy ### -->
+  </proxies>
+
   <profiles>
     <profile>
       <id>nuxeo</id>
