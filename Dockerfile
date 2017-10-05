@@ -1,4 +1,4 @@
-FROM nuxeo/docker-nuxeo:latest
+FROM nuxeo:latest
 MAINTAINER Damien Metzler <dmetzler@nuxeo.com>
 
 ENV BUILDER_VERSION 1.0
