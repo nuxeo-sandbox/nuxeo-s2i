@@ -6,6 +6,8 @@
 #   * Nuxeo Package in `marketplace` is installed thru mp-install
 #   * `nuxeo.conf` file is appended to regular nuxeo.conf
 #
+echo "---> Installing what has been built"
+find /build
 
 if [ "$(ls -A /build/artifacts 2>/dev/null)" ]; then
 	echo "---> Copying JAR artifacts in bundles directory"  
@@ -18,9 +20,9 @@ if [ -f /build/nuxeo.conf ]; then
 	cp -v /build/nuxeo.conf /docker-entrypoint-init.d/
 fi
 
-if [ -f /connect.properties ]; then
+if [ -f /opt/nuxeo/connect/connect.properties ]; then
   echo "---> Found connect.properties file"  
-  . /connect.properties
+  . /opt/nuxeo/connect/connect.properties
 
   if [ -n "$NUXEO_CONNECT_USERNAME" -a -n "$NUXEO_CONNECT_PASSWORD" -a -n "$NUXEO_STUDIO_PROJECT" ]; then  
     echo "---> Configuring connect credentials"
@@ -32,14 +34,11 @@ else
 fi
 
 if [ "$(ls -A /build/marketplace 2>/dev/null)" ]; then
-  
-  PACKAGES=$(ls -A /build/marketplace)
-  if [ -n $PACKAGE ]; then
-	  echo "---> Found package $PACKAGE"
-	  echo "---> Installing Nuxeo Package for project from $LOCAL_SOURCE_DIR/$NUXEO_PACKAGE"  
-	  /docker-entrypoint.sh nuxeoctl mp-init
-	  /docker-entrypoint.sh $NUXEO_HOME/bin/nuxeoctl mp-install $PACKAGE
-  else
-  	  echo "---> No Nuxeo Package found"
-  fi
+  PACKAGE=$(ls -A /build/marketplace)  
+  echo "---> Found package $PACKAGE"
+  echo "---> Installing Nuxeo Package for project from /build/marketplace"  
+  /docker-entrypoint.sh nuxeoctl mp-init
+  /docker-entrypoint.sh $NUXEO_HOME/bin/nuxeoctl mp-install /build/marketplace/$PACKAGE
+else
+    echo "---> No Nuxeo Package found"
 fi
