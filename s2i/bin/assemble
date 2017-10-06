@@ -203,21 +203,22 @@ fi
 
 # Move built artifacts (if any!) from the target/ directory
 # (or $ARTIFACT_DIR if specified)
-if [ -d $LOCAL_SOURCE_DIR/$ARTIFACT_DIR ]; then
-  echo "---> Moving all JARs from $ARTIFACT_DIR"
+if [ "$(ls -A $LOCAL_SOURCE_DIR/$ARTIFACT_DIR 2>/dev/null)" ]; then
+  echo "---> Copying all JARs from $ARTIFACT_DIR"
   mkdir -p $BUILD_DIR/artifacts
-  cp $LOCAL_SOURCE_DIR/$ARTIFACT_DIR/*.jar $BUILD_DIR/artifacts
+  cp -v $LOCAL_SOURCE_DIR/$ARTIFACT_DIR/*.jar $BUILD_DIR/artifacts
 fi
 
 if [ -f $LOCAL_SOURCE_DIR/nuxeo.conf ]; then
   echo "---> Copying nuxeo.conf from project..."
-  cp $LOCAL_SOURCE_DIR/nuxeo.conf /$BUILD_DIR/nuxeo.conf  
+  cp -v $LOCAL_SOURCE_DIR/nuxeo.conf /$BUILD_DIR/nuxeo.conf  
 fi
 
 if [ -n $NUXEO_PACKAGE_DIR ]; then   
-  if [ -d $LOCAL_SOURCE_DIR/$NUXEO_PACKAGE_DIR ]; then
+  if [ "$(ls -A $LOCAL_SOURCE_DIR/$NUXEO_PACKAGE_DIR 2>/dev/null)" ]; then  
+    echo "---> Copying Nuxeo package from $NUXEO_PACKAGE_DIR"
     mkdir -p $BUILD_DIR/marketplace
-    cp $LOCAL_SOURCE_DIR/$NUXEO_PACKAGE_DIR/*.zip $BUILD_DIR/marketplace/  
+    cp -v $LOCAL_SOURCE_DIR/$NUXEO_PACKAGE_DIR/*.zip $BUILD_DIR/marketplace/  
   fi
 fi
 
