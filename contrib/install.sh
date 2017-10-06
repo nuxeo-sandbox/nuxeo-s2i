@@ -7,8 +7,7 @@
 #   * `nuxeo.conf` file is appended to regular nuxeo.conf
 #
 
-
-if [ -d /build/artifacts ]; then
+if [ "$(ls -A /build/artifacts 2>/dev/null)" ]; then
 	echo "---> Copying JAR artifacts in bundles directory"  
 	cp -v /build/artifacts/*.jar $NUXEO_HOME/nxserver/bundles
 fi
@@ -32,10 +31,9 @@ else
   echo "---> No connect.properties found"
 fi
 
-if [ -d /build/marketplace ]; then
-
+if [ "$(ls -A /build/marketplace 2>/dev/null)" ]; then
   
-  PACKAGE=$(ls /build/marketplace)
+  PACKAGES=$(ls -A /build/marketplace)
   if [ -n $PACKAGE ]; then
 	  echo "---> Found package $PACKAGE"
 	  echo "---> Installing Nuxeo Package for project from $LOCAL_SOURCE_DIR/$NUXEO_PACKAGE"  
