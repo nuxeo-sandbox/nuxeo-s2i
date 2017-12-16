@@ -1,4 +1,4 @@
-FROM nuxeo:latest
+FROM nuxeo:9.3
 MAINTAINER Damien Metzler <dmetzler@nuxeo.com>
 
 ENV BUILDER_VERSION 1.0
@@ -6,7 +6,7 @@ ENV MAVEN_VERSION=3.5.0
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running Nuxeo based applications" \
-      io.k8s.display-name="Nuxeo S2i 9.3-SNAPSHOT" \
+      io.k8s.display-name="Nuxeo S2i 9.3" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,nuxeo,nuxeo93" \
       io.openshift.s2i.scripts-url="image://$STI_SCRIPTS_PATH" \
