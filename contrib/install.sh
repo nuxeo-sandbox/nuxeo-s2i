@@ -6,6 +6,16 @@
 #   * Nuxeo Package in `marketplace` is installed thru mp-install
 #   * `nuxeo.conf` file is appended to regular nuxeo.conf
 #
+
+
+function fixRights() {
+  dir=$1
+  mkdir -p $dir \
+  && chgrp -fR 0 $dir \
+  && chmod -fR g+rwX $dir
+}
+
+
 echo "---> Installing what has been built"
 find /build
 
@@ -42,3 +52,11 @@ if [ "$(ls -A /build/marketplace 2>/dev/null)" ]; then
 else
     echo "---> No Nuxeo Package found"
 fi
+
+echo "---> Resetting image configuration"
+rm -f $NUXEO_HOME/configured
+rm -f /etc/nuxeo/nuxeo.conf
+fixRights /var/lib/nuxeo/data
+fixRights /var/log/nuxeo
+fixRights /var/run/nuxeo
+fixRights /docker-entrypoint-initnuxeo.d
