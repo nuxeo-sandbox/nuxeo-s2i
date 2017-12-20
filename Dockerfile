@@ -31,7 +31,7 @@ RUN (curl -v https://www.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/a
 	  n stable && \
 	  ln -sf /usr/local/n/versions/node/8.0.0/bin/node /usr/bin/node  && \
     npm install -g npm@latest && \
-    npm install -g gulp grunt grunt-cli bower yo && \
+    npm install -g gulp grunt grunt-cli polymer-cli bower yo && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/s2i/destination && \
