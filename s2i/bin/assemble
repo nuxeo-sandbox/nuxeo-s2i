@@ -267,6 +267,7 @@ if [[ ( -n $NUXEO_SMOKE_TEST ) && ( "true" == $NUXEO_SMOKE_TEST ) ]]; then
   fixRights /var/log/nuxeo
   fixRights /var/run/nuxeo
   fixRights /docker-entrypoint-initnuxeo.d
+  fixRights /build
   exit $rc
 
 fi
