@@ -39,7 +39,8 @@ RUN mkdir -p /opt/s2i/destination && \
     chmod -R g+rwX /opt/s2i/destination && \
     chown -R 1000:0 /home/nuxeo && \
     chmod -R g+rwX /home/nuxeo && \
-    mkdir -p /build/ && \
+    mkdir -p /build/artifacts && \
+    mkdir -p /build/marketplace && \
     chown -R 1000:0 /build/ && \
     chmod -R g+rwX /build/
 
