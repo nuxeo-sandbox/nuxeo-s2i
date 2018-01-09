@@ -53,6 +53,11 @@ else
     echo "---> No Nuxeo Package found"
 fi
 
+if [ -n "$NUXEO_PACKAGES" ]; then
+  echo "---> Installing additional packages $NUXEO_PACKAGES"
+  /docker-entrypoint.sh $NUXEO_HOME/bin/nuxeoctl mp-install $NUXEO_PACKAGES
+fi
+
 echo "---> Resetting image configuration"
 rm -f $NUXEO_HOME/configured
 rm -f /etc/nuxeo/nuxeo.conf
