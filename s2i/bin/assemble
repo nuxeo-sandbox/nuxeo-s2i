@@ -27,6 +27,18 @@ function configure_studio() {
   fi
 }
 
+
+function configure_hotfix_mavenrepo() {
+  if [ -n "$NUXEO_HOTFIX_USERNAME" -a -n "$NUXEO_HOTFIX_PASSWORD" ]; then
+    xml="<server>\
+      <id>hotfix-releases</id>\
+      <username>$NUXEO_HOTFIX_USERNAME</username>\
+      <password>$NUXEO_HOTFIX_PASSWORD</password>\
+    </server>"
+    sed -i "s|<!-- ### configured hotifx repo credentials ### -->|$xml|" $HOME/.m2/settings.xml    
+  fi
+}
+
 # insert settings for HTTP proxy into settings.xml if supplied
 function configure_proxy() {
   if [ -n "$HTTP_PROXY_HOST" -a -n "$HTTP_PROXY_PORT" ]; then
@@ -118,9 +130,17 @@ else
   echo "---> No connect.properties found"
 fi
 
+if [ -f /opt/nuxeo/connect/hotfix.properties ]; then
+  echo "---> Found hotfix.properties file"  
+  . /opt/nuxeo/connect/hotfix.properties
+else 
+  echo "---> No hotfix.properties found"
+fi
+
 configure_proxy
 configure_mirrors
 configure_studio
+configure_hotfix_mavenrepo
 
 # If a pom.xml is present, this is a normal build scenario
 # so run maven.
