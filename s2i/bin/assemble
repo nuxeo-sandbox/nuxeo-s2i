@@ -142,6 +142,13 @@ configure_mirrors
 configure_studio
 configure_hotfix_mavenrepo
 
+
+if [ -f $LOCAL_SOURCE_DIR/.nuxeo-s2i ]; then
+  echo "---> Found .nuxeo-s2i file : "
+  cat $LOCAL_SOURCE_DIR/.nuxeo-s2i
+  . $LOCAL_SOURCE_DIR/.nuxeo-s2i
+fi
+
 # If a pom.xml is present, this is a normal build scenario
 # so run maven.
 if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
@@ -213,12 +220,6 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   fi
 
   popd &> /dev/null
-fi
-
-if [ -f $LOCAL_SOURCE_DIR/.nuxeo-s2i ]; then
-  echo "---> Found .nuxeo-s2i file : "
-  cat $LOCAL_SOURCE_DIR/.nuxeo-s2i
-  . $LOCAL_SOURCE_DIR/.nuxeo-s2i
 fi
 
 # Move built artifacts (if any!) from the target/ directory
