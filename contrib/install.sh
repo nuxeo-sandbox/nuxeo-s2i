@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This script install all builded artifact into 
 # a Nuxeo based image :
@@ -6,7 +6,6 @@
 #   * Nuxeo Package in `marketplace` is installed thru mp-install
 #   * `nuxeo.conf` file is appended to regular nuxeo.conf
 #
-
 
 function fixRights() {
   dir=$1
