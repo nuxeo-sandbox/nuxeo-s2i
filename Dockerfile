@@ -34,6 +34,10 @@ RUN (curl -v https://www.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/a
     npm install -g gulp grunt grunt-cli polymer-cli bower yo && \
     rm -rf /var/lib/apt/lists/*
 
+ADD ./contrib/settings.xml /opt/nuxeo/server/.m2/
+ADD ./contrib/install.sh /build/install.sh
+
+
 RUN mkdir -p /opt/s2i/destination && \
     chown -R 1000:0 /opt/s2i/destination && \
     chmod -R g+rwX /opt/s2i/destination && \
@@ -45,8 +49,6 @@ RUN mkdir -p /opt/s2i/destination && \
     chmod -R g+rwX /build/
 
 
-ADD ./contrib/settings.xml /opt/nuxeo/server/.m2/
-ADD ./contrib/install.sh /build/install.sh
 
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
