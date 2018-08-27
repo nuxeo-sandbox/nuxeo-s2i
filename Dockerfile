@@ -2,7 +2,7 @@ FROM nuxeo/nuxeo:9.10
 MAINTAINER Damien Metzler <dmetzler@nuxeo.com>
 
 ENV BUILDER_VERSION 1.0
-ENV MAVEN_VERSION=3.5.2
+ENV MAVEN_VERSION=3.5.4
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running Nuxeo based applications" \
