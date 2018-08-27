@@ -45,7 +45,7 @@ RUN mkdir -p /opt/s2i/destination && \
     chmod -R g+rwX /build/
 
 
-ADD ./contrib/settings.xml /home/nuxeo/.m2/
+ADD ./contrib/settings.xml /opt/nuxeo/server/.m2/
 ADD ./contrib/install.sh /build/install.sh
 
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
