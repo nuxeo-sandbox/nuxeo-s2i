@@ -43,7 +43,10 @@ if [ -f /opt/nuxeo/connect/connect.properties ]; then
   fi
 
   # Temporary fix for https://jira.nuxeo.com/browse/NXP-25668
-  [ -f $NUXEO_HOME/nxserver/data/installAfterRestart.log ] && rm -f $NUXEO_HOME/nxserver/data/installAfterRestart.log
+  if [ -f $NUXEO_HOME/nxserver/data/installAfterRestart.log ]; then
+    echo "---> Applying fix for NXP-25668"
+    rm -f $NUXEO_HOME/nxserver/data/installAfterRestart.log
+  fi
 
 else
   echo "---> No connect.properties found"
