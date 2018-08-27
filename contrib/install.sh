@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script install all builded artifact into 
+# This script install all builded artifact into
 # a Nuxeo based image :
 #   * JAR artifacts in `artifacts` are copied into the Nuxeo `bundles` directory
 #   * Nuxeo Package in `marketplace` is installed thru mp-install
@@ -20,21 +20,21 @@ echo "---> Installing what has been built"
 find /build
 
 if [ "$(ls -A /build/artifacts 2>/dev/null)" ]; then
-	echo "---> Copying JAR artifacts in bundles directory"  
+	echo "---> Copying JAR artifacts in bundles directory"
 	cp -v /build/artifacts/*.jar $NUXEO_HOME/nxserver/bundles
 fi
 
 
 if [ -f /build/nuxeo.conf ]; then
-	echo "---> Copying nuxeo.conf"  
+	echo "---> Copying nuxeo.conf"
 	cp -v /build/nuxeo.conf /docker-entrypoint-init.d/
 fi
 
 if [ -f /opt/nuxeo/connect/connect.properties ]; then
-  echo "---> Found connect.properties file"  
+  echo "---> Found connect.properties file"
   . /opt/nuxeo/connect/connect.properties
 
-  if [ -n "$NUXEO_CONNECT_USERNAME" -a -n "$NUXEO_CONNECT_PASSWORD" -a -n "$NUXEO_STUDIO_PROJECT" ]; then  
+  if [ -n "$NUXEO_CONNECT_USERNAME" -a -n "$NUXEO_CONNECT_PASSWORD" -a -n "$NUXEO_STUDIO_PROJECT" ]; then
     echo "---> Configuring connect credentials"
     /docker-entrypoint.sh nuxeoctl register $NUXEO_CONNECT_USERNAME $NUXEO_STUDIO_PROJECT dev openshift $NUXEO_CONNECT_PASSWORD
 
@@ -42,14 +42,17 @@ if [ -f /opt/nuxeo/connect/connect.properties ]; then
     /docker-entrypoint.sh nuxeoctl mp-hotfix
   fi
 
-else 
+  # Temporary fix for https://jira.nuxeo.com/browse/NXP-25668
+  [ -f $NUXEO_HOME/nxserver/data/installAfterRestart.log ] && rm -f $NUXEO_HOME/nxserver/data/installAfterRestart.log
+
+else
   echo "---> No connect.properties found"
 fi
 
 if [ "$(ls -A /build/marketplace 2>/dev/null)" ]; then
-  PACKAGE=$(ls -A /build/marketplace)  
+  PACKAGE=$(ls -A /build/marketplace)
   echo "---> Found package $PACKAGE"
-  echo "---> Installing Nuxeo Package for project from /build/marketplace"  
+  echo "---> Installing Nuxeo Package for project from /build/marketplace"
   /docker-entrypoint.sh nuxeoctl mp-init
   /docker-entrypoint.sh $NUXEO_HOME/bin/nuxeoctl mp-install /build/marketplace/$PACKAGE
 else
