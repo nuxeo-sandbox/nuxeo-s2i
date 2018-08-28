@@ -3,12 +3,13 @@ MAINTAINER Damien Metzler <dmetzler@nuxeo.com>
 
 ENV BUILDER_VERSION 1.0
 ENV MAVEN_VERSION=3.5.4
+ENV NODE_VERSION=8.11.3
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running Nuxeo based applications" \
       io.k8s.display-name="Nuxeo S2i 9.10" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,nuxeo,nuxeo93" \
+      io.openshift.tags="builder,nuxeo,nuxeo910" \
       io.openshift.s2i.scripts-url="image://$STI_SCRIPTS_PATH" \
       io.openshift.s2i.destination="/opt/s2i/destination"
 
@@ -28,11 +29,12 @@ RUN (curl -v https://www.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/a
      build-essential && \
     npm cache clean -f && \
 	  npm install -g n  && \
-	  n stable && \
-	  ln -sf /usr/local/n/versions/node/8.0.0/bin/node /usr/bin/node  && \
+	  n v${NODE_VERSION} && \
+	  ln -sf /usr/local/n/versions/node/${NODE_VERSION}/bin/node /usr/bin/node  && \
     npm install -g npm@latest && \
     npm install -g gulp grunt grunt-cli polymer-cli bower yo && \
     rm -rf /var/lib/apt/lists/*
+
 
 RUN mkdir -p /opt/s2i/destination && \
     chown -R 1000:0 /opt/s2i/destination && \
@@ -42,7 +44,7 @@ RUN mkdir -p /opt/s2i/destination && \
     mkdir -p /build/artifacts && \
     mkdir -p /build/marketplace && \
     chown -R 1000:0 /build/ && \
-    chmod -R g+rwX /build/
+    chmod -R g+rwX /build/ && \
     chmod -R a+rwX /home/nuxeo/.m2/
 
 
@@ -55,5 +57,9 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 # This default user is created in the openshift/base-centos7 image
 USER 1000:0
 
+RUN git clone https://github.com/nuxeo/nuxeo && \
+    cd nuxeo && git checkout 9.10 && \
+    mvn install -fae -DskipTests -s /home/nuxeo/.m2/settings.xml || \
+    cd .. && rm -rf nuxeo
 
 CMD ["/usr/libexec/s2i/usage"]
