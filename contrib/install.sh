@@ -7,6 +7,7 @@
 #   * `nuxeo.conf` file is appended to regular nuxeo.conf
 #
 
+set -e
 
 function fixRights() {
   dir=$1
