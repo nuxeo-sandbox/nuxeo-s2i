@@ -36,13 +36,6 @@ RUN (curl -v https://www.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/a
     rm -rf /var/lib/apt/lists/*
 
 ADD ./contrib/settings.xml /opt/nuxeo/server/.m2/
-
-
-RUN git clone https://github.com/nuxeo/nuxeo && \
-    cd nuxeo && git checkout 9.10 && \
-    mvn install -fae -DskipTests -s $HOME/.m2/settings.xml || \
-    cd .. && rm -rf nuxeo
-
 ADD ./contrib/install.sh /build/install.sh
 
 
@@ -63,6 +56,11 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
 # This default user is created in the openshift/base-centos7 image
 USER 1000:0
+
+RUN git clone https://github.com/nuxeo/nuxeo && \
+    cd nuxeo && git checkout 9.10 && \
+    mvn install -fae -DskipTests -s $HOME/.m2/settings.xml || \
+    cd .. && rm -rf nuxeo
 
 
 CMD ["/usr/libexec/s2i/usage"]
