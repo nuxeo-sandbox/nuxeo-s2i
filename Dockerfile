@@ -43,6 +43,8 @@ RUN mkdir -p /opt/s2i/destination && \
     mkdir -p /build/marketplace && \
     chown -R 1000:0 /build/ && \
     chmod -R g+rwX /build/
+    chmod -R a+rwX /home/nuxeo/.m2/
+
 
 
 ADD ./contrib/settings.xml /home/nuxeo/.m2/
