@@ -282,9 +282,9 @@ if [[ ( -n $NUXEO_SMOKE_TEST ) && ( "true" == $NUXEO_SMOKE_TEST ) ]]; then
   /docker-entrypoint.sh nuxeoctl stop
 
   echo "---> Resetting image configuration 0"
-  #rm -f $NUXEO_HOME/configured
+  rm -f $NUXEO_HOME/configured
   echo "---> Resetting image configuration 1"
-  #rm -f /etc/nuxeo/nuxeo.conf
+  rm -f /etc/nuxeo/nuxeo.conf
   echo "---> Resetting image configuration 2"
   fixRights /var/lib/nuxeo/data
   echo "---> Resetting image configuration 3"

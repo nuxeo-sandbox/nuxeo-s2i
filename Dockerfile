@@ -7,7 +7,7 @@ ENV NODE_VERSION=8.11.3
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
 
 LABEL io.k8s.description="Platform for building and running Nuxeo based applications" \
-      io.k8s.display-name="Nuxeo S2i 9.10" \
+      io.k8s.display-name="Nuxeo S2i 10.2" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,nuxeo,nuxeo910" \
       io.openshift.s2i.scripts-url="image://$STI_SCRIPTS_PATH" \
@@ -58,7 +58,7 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 USER 1000:0
 
 RUN git clone https://github.com/nuxeo/nuxeo && \
-    cd nuxeo && git checkout 9.10 && \
+    cd nuxeo && git checkout 10.2 && \
     mvn install -fae -DskipTests -s /home/nuxeo/.m2/settings.xml || \
     cd .. && rm -rf nuxeo
 
