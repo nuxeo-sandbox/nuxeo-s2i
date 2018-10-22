@@ -60,15 +60,10 @@ if [ -n "$NUXEO_PACKAGES" ]; then
   /docker-entrypoint.sh $NUXEO_HOME/bin/nuxeoctl mp-install $NUXEO_PACKAGES
 fi
 
-echo "---> Resetting image configuration 0"
-#rm -f $NUXEO_HOME/configured
-echo "---> Resetting image configuration 1"
-#rm -f /etc/nuxeo/nuxeo.conf
-echo "---> Resetting image configuration 2"
+echo "---> Resetting image configuration"
+rm -f $NUXEO_HOME/configured
+rm -f /etc/nuxeo/nuxeo.conf
 fixRights /var/lib/nuxeo/data
-echo "---> Resetting image configuration 3"
 fixRights /var/log/nuxeo
-echo "---> Resetting image configuration 4"
 fixRights /var/run/nuxeo
-echo "---> Resetting image configuration 5"
 fixRights /docker-entrypoint-initnuxeo.d
