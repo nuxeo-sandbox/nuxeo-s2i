@@ -59,7 +59,7 @@ USER 1000:0
 
 RUN git clone https://github.com/nuxeo/nuxeo && \
     cd nuxeo && git checkout release-10.2 && \
-    mvn install -fae -DskipTests -s /home/nuxeo/.m2/settings.xml || \
+    mvn install -DskipTests -s /home/nuxeo/.m2/settings.xml || \
     cd .. && rm -rf nuxeo
 
 CMD ["/usr/libexec/s2i/usage"]
